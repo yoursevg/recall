@@ -75,3 +75,27 @@ func GetCommands() ([]models.Command, error) {
 
 	return commands, nil
 }
+
+func FindCommandByAlias(alias string) (string, error) {
+	filePath, err := getFilePath()
+	if err != nil {
+		return "", err
+	}
+
+	var commands []models.Command
+	file, err := os.ReadFile(filePath)
+	if err == nil {
+		err = json.Unmarshal(file, &commands)
+		if err != nil {
+			return "", err
+		}
+	}
+
+	for _, c := range commands {
+		if c.Alias == alias {
+			return c.Command, nil
+		}
+	}
+
+	return "", errors.New("command not found")
+}

@@ -13,13 +13,18 @@ var addCmd = &cobra.Command{
 	Short: "Добавляет команду в хранилище",
 	Run: func(cmd *cobra.Command, args []string) {
 		var builder strings.Builder
+		var alias string
+
 		for _, key := range args {
 			builder.WriteString(key + " ")
 		}
 		command := builder.String()
 
+		alias = cmd.Flags().Lookup("alias").Value.String()
+
 		newCmd := models.Command{
 			Command:     command,
+			Alias:       alias,
 			Description: "New command",
 		}
 
@@ -33,7 +38,7 @@ var addCmd = &cobra.Command{
 }
 
 func init() {
-	addCmd.Flags().StringP("name", "n", "", "Имя команды")
-	addCmd.Flags().StringSliceP("tags", "t", []string{}, "Теги для команды")
+	addCmd.Flags().StringP("alias", "a", "", "Save command for running in future: recall run [your alias]")
+	addCmd.Flags().StringSliceP("tags", "t", []string{}, "Tags for command")
 	rootCmd.AddCommand(addCmd)
 }

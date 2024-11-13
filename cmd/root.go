@@ -8,7 +8,7 @@ import (
 
 // Определение корневой команды
 var rootCmd = &cobra.Command{
-	Use:   "recall", // Основное имя CLI
+	Use:   "recall", // main CLI app name
 	Short: "Recall is a CLI tool for storing and recalling terminal commands",
 	Long: `Recall allows you to save, search, and quickly execute your favorite terminal commands
 without having to remember them all. It makes terminal work more efficient.`,
@@ -26,5 +26,6 @@ func Execute() {
 }
 
 func init() {
+	rootCmd.CompletionOptions.DisableDefaultCmd = false
 	rootCmd.PersistentFlags().StringP("config", "c", "", "Config file (default is $HOME/.recall.yaml)")
 }

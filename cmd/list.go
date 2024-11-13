@@ -25,7 +25,11 @@ var listCmd = &cobra.Command{
 
 		fmt.Println("Saved Commands:")
 		for _, c := range commands {
-			fmt.Printf("Command: %s\nDescription: %s\n", c.Command, c.Description)
+			if c.Alias != "" {
+				fmt.Printf("Command: %s\nDescription: %s\nAlias: %s\n", c.Command, c.Description, c.Alias)
+			} else {
+				fmt.Printf("Command: %s\nDescription: %s\n", c.Command, c.Description)
+			}
 		}
 	},
 }
